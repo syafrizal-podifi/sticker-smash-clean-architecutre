@@ -1,13 +1,14 @@
 /**
  * Data layer: wraps Expo/OS APIs for picking images.
- * In Swift: Repository protocol (e.g. ImagePickerRepositoryProtocol) + implementation
- * that uses UIImagePickerController or PHPicker.
+ * Implements domain IImagePickerRepository for easy mocking in tests.
  */
 import * as ImagePicker from 'expo-image-picker';
 
-export type PickImageResult = { uri: string };
+import type { IImagePickerRepository, PickImageResult } from '@/domain/repositories/IImagePickerRepository';
 
-export const imagePickerRepository = {
+export type { IImagePickerRepository, PickImageResult };
+
+const imagePickerRepositoryImpl: IImagePickerRepository = {
   async pickImage(): Promise<PickImageResult | null> {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
@@ -21,3 +22,5 @@ export const imagePickerRepository = {
     return { uri: result.assets[0].uri };
   },
 };
+
+export const imagePickerRepository = imagePickerRepositoryImpl;

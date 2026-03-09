@@ -1,11 +1,22 @@
 /**
  * Domain layer: single responsibility for picking an image from the library.
- * In Swift: UseCase protocol/struct with execute(), injected with Repository.
+ * Depends on IImagePickerRepository so you can inject a mock in tests.
  */
-import { imagePickerRepository, PickImageResult } from '@/data/repositories/ImagePickerRepository';
+import type { IImagePickerRepository } from '@/domain/repositories/IImagePickerRepository';
+import type { IPickImageUseCase } from '@/domain/usecases/IPickImageUseCase';
 
-export const pickImageUseCase = {
-  async execute(): Promise<PickImageResult | null> {
-    return imagePickerRepository.pickImage();
-  },
-};
+import { imagePickerRepository } from '@/data/repositories/ImagePickerRepository';
+
+export type { IPickImageUseCase };
+
+export function createPickImageUseCase(
+  repo: IImagePickerRepository = imagePickerRepository
+): IPickImageUseCase {
+  return {
+    async execute() {
+      return repo.pickImage();
+    },
+  };
+}
+
+export const pickImageUseCase = createPickImageUseCase();
