@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 // View only; no ViewModel for this screen.
-export default function AboutScreen() {
+export default function SettingScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>About screen</Text>
+      <Text style={styles.text}>Setting screen</Text>
     </View>
   );
 }
