@@ -16,7 +16,7 @@ import IconButton from '@/components/IconButton';
 import ImageViewer from '@/components/ImageViewer';
 import EmojiSticker from '@/components/EmojiSticker';
 
-import { useHomeStore } from './homeStore';
+import { useHomeStore } from './_homeStore';
 
 const PlaceholderImage = require('@/assets/images/background-image.png');
 
