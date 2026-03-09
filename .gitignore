@@ -21,6 +21,25 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+/ios/Pods/
+
+# Buck
+buck-out/
+
+# Ruby / Bundler
+.bundle/
+vendor/bundle/
+
+# Fastlane
+/fastlane/report.xml
+/fastlane/Preview.html
+/fastlane/screenshots
+/fastlane/test_output
+
 # debug
 npm-debug.*
 yarn-debug.*
@@ -31,10 +50,20 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
 
 # typescript
 *.tsbuildinfo
+
+# testing
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
 app-example
 
