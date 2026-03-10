@@ -1,11 +1,8 @@
 /**
  * ViewModel: state + actions that call use cases and update state.
- * In Swift: ObservableObject / ViewModel class with @Published properties and methods.
- * useHomeStore() in the View is like @StateObject / @ObservedObject.
  */
-import type { ImageSourcePropType } from 'react-native';
 import type { RefObject } from 'react';
-import type { View } from 'react-native';
+import type { ImageSourcePropType, View } from 'react-native';
 import { create } from 'zustand';
 
 import { pickImageUseCase } from '@/domain/usecases/PickImageUseCase';
@@ -29,7 +26,6 @@ type HomeActions = {
 };
 
 export const useHomeStore = create<HomeState & HomeActions>((set) => ({
-  // State (Swift: @Published; when these change, View re-renders)
   selectedImage: undefined,
   showAppOptions: false,
   isModalVisible: false,

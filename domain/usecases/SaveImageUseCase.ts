@@ -1,35 +1,33 @@
 /**
  * Domain layer: captures a view as image and saves to the photo library.
- * Depends on IMediaLibraryRepository so you can inject a mock in tests.
+ * Depends on IViewCaptureRepository and IMediaLibraryRepository so you can inject mocks in tests.
  */
 import type { RefObject } from 'react';
 import type { View } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
 
 import type { IMediaLibraryRepository } from '@/domain/repositories/IMediaLibraryRepository';
+import type { IViewCaptureRepository } from '@/domain/repositories/IViewCaptureRepository';
 import type { ISaveImageUseCase } from '@/domain/usecases/ISaveImageUseCase';
 
 import { mediaLibraryRepository } from '@/data/repositories/MediaLibraryRepository';
+import { viewCaptureRepository } from '@/data/repositories/ViewCaptureRepository';
+
+export type { ISaveImageUseCase };
 
 const CAPTURE_HEIGHT = 440;
 const CAPTURE_QUALITY = 1;
 
-export type { ISaveImageUseCase };
-
 export function createSaveImageUseCase(
-  repo: IMediaLibraryRepository = mediaLibraryRepository
+  viewCapture: IViewCaptureRepository = viewCaptureRepository,
+  mediaLibrary: IMediaLibraryRepository = mediaLibraryRepository
 ): ISaveImageUseCase {
   return {
     async execute(ref: RefObject<View | null>) {
-      const node = ref.current;
-      if (!node) return;
-
-      const localUri = await captureRef(node, {
+      const uri = await viewCapture.captureToUri(ref, {
         height: CAPTURE_HEIGHT,
         quality: CAPTURE_QUALITY,
       });
-
-      await repo.saveToLibraryAsync(localUri);
+      await mediaLibrary.saveToLibraryAsync(uri);
     },
   };
 }
